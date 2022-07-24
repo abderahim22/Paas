@@ -3,7 +3,8 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/docker
 
 trigger:
-- master
+- main
+
 
 resources:
 - repo: self
@@ -20,14 +21,14 @@ stages:
     pool:
       vmImage: 'ubuntu-latest'
     steps:
-    - task: Docker@2
-      inputs:
-        containerRegistry: 'Binarythistle Docker Hub'
-        repository: 'binarythistle/weatherapi'
-        command: 'buildAndPush'
-        Dockerfile: '**/Dockerfile'
-        tags: |
-          $(tag)
+       - task: Docker@2
+         inputs:
+          containerRegistry: 'Paas'
+          repository: 'abderahim23/weatherapi'
+          command: 'buildAndPush'
+          Dockerfile: '**/Dockerfile'
+          tags: |
+            $(tag)
 - stage: Provision
   displayName: 'Terraforming on Azure...'
   dependsOn: Build
